@@ -1,48 +1,18 @@
 const express = require('express');
 
+const { createProduct, getAllProducts, getProduct, editProduct, deleteProduct } = require('../controllers/productController')
+
 const router = express.Router();
 
-// /api/v1/products
-router.get('/', (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        length: 10,
-        data: [
-            {
-                id: '0',
-                name: 'iPhone 13',
-                price: 10000
-            },
-            {
-                id: '1',
-                name: 'iPhone SE',
-                price: 450
-            }
-        ]
-    });
-});
+const {route} = router
 
-router.get('/:id', (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        data: {
-                id: req.params.id,
-                name: 'iPhone 13',
-                price: 10000
-            }
-    });
-});
+// router.get('/', getAllProducts);
+// router.get('/:id', getProduct);
+// router.post('/', createProduct);
+// router.patch('/:id', editProduct);
+// router.delete('/:id', deleteProduct);
 
-router.post('/', (req, res) => {
-    // create new product
-});
-
-router.patch('/:id', (req, res) => {
-    // edit product
-});
-
-router.delete('/:id', (req, res) => {
-    // delete product
-});
+router.route('/').get(getAllProducts).post(createProduct);
+router.route('/:id').get(getProduct).patch(editProduct).delete(deleteProduct);
 
 module.exports = router;

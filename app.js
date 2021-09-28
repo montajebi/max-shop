@@ -4,6 +4,8 @@ const { productsRouter } = require('./routes');
 
 const app = express();
 
+app.use(express.json());
+
 app.use('/api/v1/products', productsRouter);
 
 app.get('/api/v1/health', (req, res) => {

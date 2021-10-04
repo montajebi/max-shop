@@ -12,7 +12,7 @@ exports.getAllProducts = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(error.statusCode || 400).json({
       status: 'failed',
       error,
     });
@@ -32,8 +32,8 @@ exports.getProduct = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error.message);
-    res.status(400).json({
+    console.log(error);
+    res.status(error.statusCode || 400).json({
       status: 'failed',
       error: {
         ...error,
@@ -57,7 +57,7 @@ exports.createProduct = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(error.statusCode || 400).json({
       status: 'failed',
       error,
     });
@@ -78,7 +78,7 @@ exports.editProduct = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(error.statusCode || 400).json({
       status: 'failed',
       error,
     });
@@ -94,7 +94,7 @@ exports.deleteProduct = async (req, res) => {
     res.status(204).json();
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(error.statusCode || 400).json({
       status: 'failed',
       error,
     });

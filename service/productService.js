@@ -1,5 +1,8 @@
 const Product = require('../models/Product');
 
+const { NotFound } = require('./../utils/Errors');
+const messages = require('./../shared/constants/messages');
+
 exports.find = async () => {
   const products = await Product.find();
 
@@ -10,7 +13,7 @@ exports.findById = async (id) => {
   const product = await Product.findById(id);
 
   if (!product) {
-    throw new Error('Product not found');
+    throw new NotFound(messages.PRODUCT.NOT_FOUND);
   }
 
   return product;
@@ -28,7 +31,7 @@ exports.editById = async (id, data) => {
   });
 
   if (!editedProduct) {
-    throw new Error('Product not found');
+    throw new NotFound(messages.PRODUCT.NOT_FOUND);
   }
 
   return editedProduct;

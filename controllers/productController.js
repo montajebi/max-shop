@@ -71,22 +71,7 @@ exports.editProduct = async (req, res) => {
   const { name, price } = req.body;
 
   try {
-    // REFACTOR: move logic to service
-    const editedProduct = await Product.findByIdAndUpdate(
-      id,
-      { name, price },
-      {
-        new: true,
-      }
-    );
-
-    if (!editedProduct) {
-      return res.status(404).json({
-        status: 'failed',
-        message: 'Product not found!',
-      });
-    }
-
+    const editedProduct = await productService.editProductById(id, {name,price});
     res.status(200).json({
       status: 'success',
       data: {

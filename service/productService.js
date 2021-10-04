@@ -17,7 +17,19 @@ exports.findById = async (id) => {
 };
 
 exports.createProduct = async (data) => {
-    const newProduct = await Product.create(data);
+  const newProduct = await Product.create(data);
 
-    return newProduct;
+  return newProduct;
+};
+
+exports.editProductById = async (id, data) => {
+  const editedProduct = await Product.findByIdAndUpdate(id, data, {
+    new: true,
+  });
+
+  if (!editedProduct) {
+    throw new Error('Product not found');
+  }
+  
+  return editedProduct;
 };

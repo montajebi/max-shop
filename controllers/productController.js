@@ -1,5 +1,3 @@
-const Product = require('../models/Product');
-
 const productService = require('./../service/productService');
 
 exports.getAllProducts = async (req, res) => {
@@ -49,7 +47,7 @@ exports.createProduct = async (req, res) => {
   const { name, price } = req.body;
 
   try {
-    const newProduct = await productService.createProduct({ name, price });
+    const newProduct = await productService.create({ name, price });
 
     res.status(201).json({
       status: 'success',
@@ -71,7 +69,7 @@ exports.editProduct = async (req, res) => {
   const { name, price } = req.body;
 
   try {
-    const editedProduct = await productService.editProductById(id, {name,price});
+    const editedProduct = await productService.editById(id, {name,price});
     res.status(200).json({
       status: 'success',
       data: {
@@ -91,17 +89,7 @@ exports.deleteProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // REFACTOR: move logic to service
-    const product = await Product.findById(id);
-
-    if (!product) {
-      return res.status(404).json({
-        status: 'failed',
-        message: 'Product not found!',
-      });
-    }
-
-    await Product.findByIdAndDelete(id);
+    await productService.deleteProductById(id);
 
     res.status(204).json();
   } catch (error) {

@@ -16,13 +16,13 @@ exports.findById = async (id) => {
   return product;
 };
 
-exports.createProduct = async (data) => {
+exports.create = async (data) => {
   const newProduct = await Product.create(data);
 
   return newProduct;
 };
 
-exports.editProductById = async (id, data) => {
+exports.editById = async (id, data) => {
   const editedProduct = await Product.findByIdAndUpdate(id, data, {
     new: true,
   });
@@ -30,6 +30,11 @@ exports.editProductById = async (id, data) => {
   if (!editedProduct) {
     throw new Error('Product not found');
   }
-  
+
   return editedProduct;
+};
+
+exports.deleteById = async (id) => {
+  await this.findById(id);
+  await Product.findByIdAndDelete(id);
 };

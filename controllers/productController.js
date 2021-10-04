@@ -44,10 +44,11 @@ exports.getProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  const { name, price } = req.body;
+  const { name, price, imageUrl } = req.body;
 
   try {
-    const newProduct = await productService.create({ name, price });
+    const newProductData = {name, price, imageUrl};
+    const newProduct = await productService.create(newProductData);
 
     res.status(201).json({
       status: 'success',

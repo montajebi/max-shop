@@ -6,6 +6,9 @@ const productSchema = new mongoose.Schema({
     required: true,
     minlength: 3,
   },
+  description : {
+    type: String,
+  },
   price: {
     type: Number,
     min: 0,
@@ -15,6 +18,15 @@ const productSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  quantity: {
+    type: Number,
+    default: 1
+  },
+  weight: {
+    type: Number,
+    required: true,
+  },
+  imageUrl: String,
 });
 
 const Product = mongoose.model('Product', productSchema);

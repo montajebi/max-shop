@@ -1,6 +1,6 @@
 const productService = require('./../service/productService');
 
-exports.getAllProducts = async (req, res) => {
+exports.getAllProducts = async (req, res, next) => {
   try {
     const products = await productService.find();
 
@@ -11,15 +11,11 @@ exports.getAllProducts = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(error.statusCode || 400).json({
-      status: 'failed',
-      error,
-    });
+    next(error);
   }
 };
 
-exports.getProduct = async (req, res) => {
+exports.getProduct = async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -32,22 +28,15 @@ exports.getProduct = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(error.statusCode || 400).json({
-      status: 'failed',
-      error: {
-        ...error,
-        message: error.message,
-      },
-    });
+    next(error);
   }
 };
 
-exports.createProduct = async (req, res) => {
+exports.createProduct = async (req, res, next) => {
   const { name, price, imageUrl } = req.body;
 
   try {
-    const newProductData = {name, price, imageUrl};
+    const newProductData = { name, price, imageUrl };
     const newProduct = await productService.create(newProductData);
 
     res.status(201).json({
@@ -57,20 +46,16 @@ exports.createProduct = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(error.statusCode || 400).json({
-      status: 'failed',
-      error,
-    });
+    next(error);
   }
 };
 
-exports.editProduct = async (req, res) => {
+exports.editProduct = async (req, res, next) => {
   const { id } = req.params;
   const { name, price } = req.body;
 
   try {
-    const editedProduct = await productService.editById(id, {name,price});
+    const editedProduct = await productService.editById(id, { name, price });
     res.status(200).json({
       status: 'success',
       data: {
@@ -78,15 +63,11 @@ exports.editProduct = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(error.statusCode || 400).json({
-      status: 'failed',
-      error,
-    });
+    next(error);
   }
 };
 
-exports.deleteProduct = async (req, res) => {
+exports.deleteProduct = async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -94,10 +75,6 @@ exports.deleteProduct = async (req, res) => {
 
     res.status(204).json();
   } catch (error) {
-    console.log(error);
-    res.status(error.statusCode || 400).json({
-      status: 'failed',
-      error,
-    });
+    next(error);
   }
 };
